@@ -1,0 +1,613 @@
+<!doctype html> <html class="no-js" lang="" xmlns="http://www.w3.org/1999/xhtml" data-desktop="1" data-mobile="2" data-landscape="3"> <head> <meta charset="utf-8"> <meta http-equiv="x-ua-compatible" content="ie=edge"> <!-- Chrome, Firefox OS, Opera and Vivaldi --> <meta name="theme-color" content="#0c2124"> <!-- Windows Phone --> <meta name="msapplication-navbutton-color" content="#0c2124"> <!-- iOS Safari --> <meta name="apple-mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-status-bar-style" content="black"> <link rel="shortcut icon" type="image/gif" href="favicon.gif"> <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> <title>Earth 2050</title> <meta name="description" content=""> <meta name="viewport" content="width=device-width,height=device-height"> <!--OPEN GRAPH--> <meta name="og:title" content=""> <meta name="og:description" content=""> <meta name="og:image" content=""> <!--OPEN GRAPH COMPLETE--> <link rel="stylesheet" href="./frontend/styles/Kaspersky.min.css"> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-92697677-1', 'auto');
+		ga('send', 'pageview'); </script> </head> <body> <div class="transition-wrapper"></div> <div class="kaspersky-app"> <div class="modal modal_static"> <div class="modal__content"> <div class="modal__ui modal-message pattern pattern_lines-4 modal__ui_visible" data-no-close=""> <div class="pattern__content"> <h2 class="modal-message__title" data-localization="index.no_webgl"></h2> <p class="modal-message__body"></p> </div> </div> </div> </div> <div class="main-container"> <script id="earth-popup" type="text/x-handlebars-template"> <div class="earth-popup">
+		{{#each this}}
+		<div class="earth-popup__item  earth-popup__item_{{@index}}">
+			<div class="earth-popup__item-shadow"></div>
+			<div class="earth-popup__preview-hexagon">
+				<div class="hexagon  earth-popup__preview">
+					<div class="hexagon__in1">
+						<div class="hexagon__in2">
+							<div class="earth-popup__hover">
+								<div class="hexagon__image"  style="background-image: url('{{preview}}')"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="earth-popup__flag-container">
+				<div class="earth-popup__flag">
+					<svg version="1.0" class="hexagon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	width="89" height="77" viewBox="0 0 89 77" xml:space="preserve">
+<path style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10;" d="M88.5,38.5l-22,38h-44l-22-38l22-38h44L88.5,38.5z"/>
+</svg>
+
+
+					<div class="earth-popup__flag-hexagon">
+						<div class="hexagon">
+							<div class="hexagon__in1">
+								<div class="hexagon__in2">
+									<div class="hexagon__image"  style="background-image: url('{{country.flag}}')"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="earth-popup__info">
+						<div class="earth-popup__city">{{name}}</div>
+						<div class="earth-popup__briefs-count">{{briefs}} <span  data-localization="planet.briefs_count{{howMuch briefs}}"></span></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		{{/each}}
+	</div> </script> <div class="help"> <div class="help__cont" data-localization="index.helper"></div> </div> </div> <div class="timeline"> <script type="text/x-handlebars-template"> <div class="timeline__item">{{this}}</div> </script> <canvas class="timeline__canvas"></canvas> </div> </div> <div class="best-of-week disable-select"> <input type="checkbox" class="checkbox checkbox_mobile best-of-week__checkbox" id="best-of-week__checkbox"> <div class="best-of-week__modal"> <div class="backdrop"></div> <div class="best-of-week__title" data-localization="best_of_week.title"></div> <ul class="list best-of-week__carousel"> <li class="list__item best-of-week__decor-hexagon"> <div class="best-of-week__item"> <svg version="1.0" class="hexagon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="89" height="77" viewBox="0 0 89 77" xml:space="preserve"> <path style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M88.5,38.5l-22,38h-44l-22-38l22-38h44L88.5,38.5z"/> </svg> </div> </li> <script id="best-of-week__item" type="text/x-handlebars-template"> {{#each this}}
+				<li class="list__item  best-of-week__item-container">
+					<a href="{{link}}" class="best-of-week__item">
+						<div class="hexagon">
+							<div class="hexagon__in1">
+								<div class="hexagon__in2">
+									<div class="hexagon__image  best-of-week__image" style="background-image: url('{{preview}}');"></div>
+								</div>
+							</div>
+						</div>
+						<span class="best-of-week__name  best-of-week__name_{{multiline}}">
+							{{#each name}}
+								<span class="best-of-week__name-line">{{this}}</span><br/>
+							{{/each}}
+						</span>
+							<div class="best-of-week__item-border"></div>
+					</a>
+				</li>{{/each}} </script> </ul> <label for="best-of-week__checkbox" class="best-of-week__close"> <svg class="close-button-hexagon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="66" height="57" viewBox="0 0 66 57" xml:space="preserve"> <defs> <clipPath class="clip-path" id="best_of_week__close_button"><rect x="0" y="0" width="100%" height="100%" fill="#000000"/></clipPath> </defs> <path class="_hover" style="clip-path:url(#best_of_week__close_button)" d="M64.6,28.3L48.6,56H16.5l-16-27.8l16-27.8h32.1L64.6,28.3z"/> <path class="_inner" style="opacity:0.3;fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M60.6,27.8L46.3,53.3H18.8L4.6,27.8L18.8,3.3h27.5
+	L60.6,27.8z"/> <path class="_outer" style="fill:none;stroke:#04AA73;stroke-miterlimit:10" d="M64.6,28.3L48.6,56H16.5l-16-27.8l16-27.8h32.1L64.6,28.3z"/> <path class="_cross" style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M22.1,17.8L43.1,38.8M22.1,38.8L43.1,17.8"/> </svg> </label> </div> <label for="best-of-week__checkbox" class="border-button border-button_green border-button_bg best-of-week__show-button checkbox__hide-when-checked"><span data-localization="best_of_week.button">LOOK AT BEST OF THE WEEK</span></label> </div> <div class="k-menu"> <label for="k-menu-toggle" class="k-menu-item k-menu-item_hamburger"><img src="./frontend/images/hamburger.png" alt=""></label> <div class="landscape-orientation background"> <!--<div class="backdrop"></div>--> <!--<div class="landscape-orientation__pic"></div>--> <!--<img src="./frontend/images/landscape-orientation.svg" class="landscape-orientation__pic">--> <div class="row landscape-orientation__pic-row"> <svg class="landscape-orientation__pic" width="213" height="211"> <image xlink:href="./frontend/images/landscape-orientation.svg" src="./frontend/images/landscape-orientation.png" width="100%" height="100%"/> </svg> </div> <div class="row landscape-orientation__text-row"> <h1 class="landscape-orientation__text" data-localization="landscape.title"></h1> </div> </div> <div class="k-menu-item k-menu__logo clearfix"> <script type="text/handlebars" data-localization="logo.items"> {{#each this}}
+		<a href="{{attr.href}}" target="_blank" class="logo"></a>
+		{{/each}} </script> <a href="#/modal/about" class="logo logo_20"></a> </div> <input type="checkbox" id="k-menu-toggle" class="checkbox checkbox_mobile"><!-- Чекбокс идет перед тем элементом, который он скрывает/показывает --> <div class="k-menu__container"> <div class="backdrop"></div> <label for="k-menu-toggle" class="k-menu-item k-menu-item_hide-menu"> <svg class="close-button-hexagon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="66" height="57" viewBox="0 0 66 57" xml:space="preserve"> <defs> <clipPath class="clip-path" id="k_menu__close_button"><rect x="0" y="0" width="100%" height="100%" fill="#000000"/></clipPath> </defs> <path class="_hover" style="clip-path:url(#k_menu__close_button)" d="M64.6,28.3L48.6,56H16.5l-16-27.8l16-27.8h32.1L64.6,28.3z"/> <path class="_inner" style="opacity:0.3;fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M60.6,27.8L46.3,53.3H18.8L4.6,27.8L18.8,3.3h27.5
+	L60.6,27.8z"/> <path class="_outer" style="fill:none;stroke:#04AA73;stroke-miterlimit:10" d="M64.6,28.3L48.6,56H16.5l-16-27.8l16-27.8h32.1L64.6,28.3z"/> <path class="_cross" style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M22.1,17.8L43.1,38.8M22.1,38.8L43.1,17.8"/> </svg> </label> <div class="k-menu-item k-menu-item_login k-menu__authorization"> <div class="authorization"> <span class="authorization__lang desktop"> <a class="nav-menu__link nav-menu__link_lang nav-menu__link_inactive" data-lang="ru" href="/ru/">RU</a> <span class="nav-menu__item-divider"></span> <a class="nav-menu__link nav-menu__link_lang" data-lang="en" href="/en/">EN</a> </span> <span class="mute-btn mute-btn_false"> <!--<embed class="sound" src="./frontend/assets/sound/videoplayback.mp3" autostart="true" loop="true" width="0" height="0"></embed>--> <!--<noembed><bgsound class="sound" src="assets/sound/videoplayback.mp3" loop="infinite"></noembed>--> <audio class="sound" src="./frontend/assets/sound/videoplayback.mp3" loop></audio> <input type="checkbox" id="_mute_btn__checkbox" class="mute-btn__checkbox"> <label for="_mute_btn__checkbox"> </label> </span> <a href="#/modal/login" class="button authorization__login-button"> <span class="button__content" data-localization="authorization.title">LOGIN</span> </a> <div class="user-data user-info authorization__user-info"> <div class="user-info__item user-info__button button button_solid-green"><span class="button__content user-data__total-rank">3</span></div> <a href="user-panel.html" class="user-info__item user-info__glow user-info__username-cont"> <div class="user-info__username"> <div class="user-info__username-icon"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="20" viewBox="0 0 18 20" style="enable-background:new 0 0 18 20" xml:space="preserve"> <g> <path style="fill:#00FFA7" d="M8,4.7v0.3H0.2c0.6-2,2.3-4.1,4.4-4.7C5.3,0.1,6.1,0,6.8,0c0.9,0,1.8,0.1,2.6,0.4
+		c0.3,0.1,0.6,0.2,0.9,0.3c0.1,0,0.1,0,0.2,0.1l0.1,0c0,0,0.1,0,0.2,0.1l0.1,0c0.1,0,0.1,0.1,0.2,0.1c0.1,0,0.1,0.1,0.2,0.1l0.1,0
+		c0,0,0.1,0,0.1,0.1l0.1,0c0.1,0,0.1,0.1,0.2,0.1c0.1,0,0.1,0.1,0.2,0.1l0.1,0c0,0,0.1,0.1,0.1,0.1l0.1,0c0.1,0,0.1,0.1,0.2,0.1
+		c0.1,0,0.1,0.1,0.2,0.1c0,0,0,0,0,0l0,0c0,0,0.1,0.1,0.1,0.1l0,0c0,0,0,0,0,0c0,0,0,0,0,0c-1.5,0.3-2.9,0.8-3.9,1.4
+		C8.3,3.6,8,4.1,8,4.7z"/> <path style="fill:#00FFA7" d="M8,8.5c0,0.5,0.3,1,0.8,1.4c1.7,1.1,4.1,1.7,6.8,1.7c0,0,0,0.1,0,0.1
+		c0,0.2-0.2,0.3-0.3,0.4c-0.1,0.1-0.1,0.1-0.1,0.1c0,0,0,0.1,0.1,0.1c0.1,0.1,0.2,0.2,0.2,0.4c0,0.2-0.1,0.3-0.2,0.4
+		c-0.1,0.1-0.1,0.1-0.1,0.2c-0.1,0.2,0,0.3,0,0.5c0,0,0,0.1,0,0.1c0.1,0.2,0.3,1.1-0.4,1.4c-0.4,0.3-0.9,0.3-1.4,0.3
+		c-0.1,0-0.2,0-0.3,0h0c-0.1,0-0.2,0-0.3,0c-0.3,0-0.6,0-0.9,0.1c-1.3,0.4-1.2,2.1-1.1,3.4c0,0.3,0,0.5,0,0.7v0c0,0,0,0.1,0,0.1
+		c0,0-0.1,0-0.1,0c0,0,0,0,0,0l-7.2-0.7c0,0-0.1,0-0.1-0.1c0,0,0-0.1,0-0.1l0,0c0-0.1,0-0.1,0.1-0.2l0-0.1c0,0,0-0.1,0-0.1l0-0.1
+		c0,0,0-0.1,0-0.1l0,0c0-0.1,0-0.1,0.1-0.2l0,0c0,0,0-0.1,0-0.1l0-0.1c0,0,0-0.1,0-0.1l0-0.1c0,0,0-0.1,0-0.1l0,0c0-0.1,0-0.1,0-0.2
+		l0,0c0,0,0-0.1,0-0.1l0-0.1c0,0,0-0.1,0-0.1l0,0c0-0.1,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1c0,0,0,0,0,0c0,0,0-0.1,0-0.1l0,0
+		c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1v0c0,0,0-0.1,0-0.1c0,0,0,0,0,0c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1l0,0
+		c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1l0,0c0,0,0-0.1,0-0.1l0,0l0,0c0,0,0,0,0,0
+		c-0.3-1-0.9-1.8-1.7-2.7c-0.5-0.6-1-1.3-1.4-2C0.4,9.9,0.2,9.2,0.1,8.4h8V8.5z"/> <path style="fill:#00FFA7" d="M8.7,8.4h0.7c0.2,0,0.4-0.2,0.4-0.4V5.3c0-0.2-0.2-0.4-0.4-0.4H8.7V4.7
+		c0-0.3,0.2-0.6,0.5-0.8c1.6-1,4.1-1.6,6.7-1.6c0.3,0,0.6,0,1,0c0.6,0,1.1,0.5,1.1,1v6.6c0,0.5-0.5,0.9-1.1,1c0,0,0,0,0,0
+		c-0.3,0-0.6,0-1,0c-2.7,0-5.1-0.6-6.7-1.6C8.9,9.1,8.7,8.8,8.7,8.5V8.4z"/> <rect x="0" y="5.7" style="fill:#00FFA7" width="9.1" height="2"/> </g> </svg> </div> <span class="user-info__username-name user-data__username"></span> </div> </a> <a href="#/logout" class="user-info__item user-info__glow user-info__close-cont"> <div class="close-button user-info__close"> <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="435px" height="375px" viewBox="0 0 435 375" xml:space="preserve"> <polyline style="fill:none;stroke:#00ffa7;stroke-width:14;stroke-miterlimit:10" points="362,75.2 427,187.5
+	361.8,299.8 "/> <polyline style="fill:none;stroke:#00ffa7;stroke-width:14;stroke-miterlimit:10" points="322,368 113.5,368
+	9,187.5 113.5,7 322,7 "/> <line style="fill:none;stroke:#00ffa7;stroke-width:14;stroke-miterlimit:10" x1="427" y1="188" x2="165" y2="188"/> </svg> </div> </a> </div> </div> <span class="authorization__lang mobile"> <a class="nav-menu__link nav-menu__link_lang nav-menu__link_inactive" data-lang="ru" href="/backend/api/v1/set/ru">RU</a> <span class="nav-menu__item-divider"></span> <a class="nav-menu__link nav-menu__link_lang" data-lang="en" href="/backend/api/v1/set/en">EN</a> </span> </div> <div class="k-menu-item k-menu__links"> <ul class="list nav-menu"> <script type="text/handlebars" data-localization="menu.items"> {{#each this}}
+					<li class="list__item  nav-menu__item  {{#if desktop}}__desktop{{/if}}"><a class="nav-menu__link" href="{{attr.href}}">{{html}}</a></li>
+					{{/each}} </script> </ul> </div> <div class="k-menu-item k-menu__socials"> <ul class="list share"> <li class="list__item"><a href="https://www.facebook.com/sharer/sharer.php?u={{location}}" class="share__item share__item_fb" target="_blank"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="19" viewBox="0 0 18 19" style="enable-background:new 0 0 18 19" xml:space="preserve"> <path style="fill:#ffffff" d="M11.4,3.6h1.7V0.9h-2.1v0C7.8,1,7.2,2.8,7.1,4.6h0v2.2H5.4v2.7h1.7v8.6h3.3V9.5h2.5l0.5-2.7h-3v-2
+	C10.4,4.2,10.8,3.6,11.4,3.6z"/> </svg> </a></li> <li class="list__item"><a href="https://twitter.com/intent/tweet?url={{location}}" class="share__item share__item_tw" target="_blank"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="19" viewBox="0 0 18 19" style="enable-background:new 0 0 18 19" xml:space="preserve"> <path style="fill:#ffffff" d="M18.1,4.2c-0.3,0.2-1.2,0.5-2,0.6c0.5-0.3,1.3-1.2,1.5-1.9c-0.5,0.3-1.7,0.8-2.3,0.8c0,0,0,0,0,0
+	c-0.7-0.7-1.6-1.1-2.6-1.1c-2,0-3.6,1.6-3.6,3.6c0,0.3,0,0.5,0.1,0.8h0C6.4,6.8,3.4,5.4,1.6,3.2C0.5,5,1.5,7.1,2.7,7.9
+	c-0.4,0-1.2,0-1.6-0.4c0,1.2,0.6,2.9,2.8,3.5c-0.4,0.2-1.2,0.2-1.5,0.1c0.1,1,1.6,2.4,3.3,2.4c-0.6,0.7-2.8,1.9-5.2,1.5
+	c1.7,1,3.6,1.6,5.7,1.6c5.9,0,10.4-4.7,10.2-10.4c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0-0.1C16.8,5.6,17.6,5,18.1,4.2z"/> </svg> </a></li> </ul> </div> </div> </div> <div class="modal"> <div class="backdrop"></div> <div class="modal__content"> <div class="modal__ui brief-modal background background_brief"> <!--<span>--> <div class="brief-city-name"></div> <!--svg height="0"  class="scroll-mask">
+	<mask id="_brief-modal_mask">
+		<linearGradient id="_brief-modal_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_brief-modal_gradient)"/>
+	</mask>
+</svg--> <div class="brief-modal__add-button"> <a href="addwork.html" class="hexagon brief-modal__add addwork-link __desktop" data-authorization-required> <div class="hexagon__in1"> <div class="hexagon__in2"> <div class="hexagon__image pattern pattern_lines-3"> <div class="button"> <div class="button__content" data-localization="brief.add"></div> </div> <!--<span class="brief-modal__add-text"  data-localization="brief.add">Add your work</span>--> </div> </div> </div> </a> </div> <div class="scroll"> <div class="scroll__masked"><!--style="mask: url(#_brief-modal_mask);"--> <div class="scroll__cont"> <!--<div class="brief-modal__when-comment">
+						<form class="row  add-comment">
+	<h3 class="brief-modal__h3"  data-localization="comment.title"></h3>
+
+	<textarea name="" id="" rows="12"  data-localization="comment.input"></textarea>
+
+	<button class="button"><span class="button__content"  data-localization="comment.submit">POST your prediction</span></button>
+
+	<button class="border-button  border-button_green  add-comment__cancel"  data-localization="comment.cancel"></button>
+</form>
+					</div>--> <!--<div class="brief-modal__when-brief">--> <div class="row brief-modal__cont"> <script class="__title" type="text/x-handlebars-template"> <h1 class="brief-modal__h1">{{{title}}}</h1>
+
+		{{#ifAuthor author}}
+		<div class="brief-modal__author  brief-comment  row">
+			<div class="column  brief-comment__userpic">
+				<div class="user-pic  ">
+	<div class="user-pic__border">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	width="147" height="128" viewBox="0 0 147 128" xml:space="preserve">
+<path style="fill:none;stroke:#4CBB87;stroke-width:7;stroke-miterlimit:10;" d="M143.5,64l-35,60.5h-70L3.5,64l35-60.5h70L143.5,64z"/>
+</svg>
+
+	</div>
+	<div class="user-pic__border  user-pic__border_blurred">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	width="147" height="128" viewBox="0 0 147 128" xml:space="preserve">
+<path style="fill:none;stroke:#4CBB87;stroke-width:7;stroke-miterlimit:10;" d="M143.5,64l-35,60.5h-70L3.5,64l35-60.5h70L143.5,64z"/>
+</svg>
+
+	</div>
+	<div class="user-pic__photo">
+		<div class="hexagon">
+			<div class="hexagon__in1">
+				<div class="hexagon__in2  pattern  pattern_top  pattern_lines">
+					<div class="hexagon__image  grayscale  user-pic__image  user-data__userpic"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+			</div>
+			<div class="column  brief-comment__text">
+				<a href="/user-panel/?user_id={{author.id}}" class="brief-comment__username">{{author.name}}</a>
+				<div class="brief-comment__comment">{{author.about}}</div>
+			</div>
+
+		</div>
+		{{/ifAuthor}}
+
+
+		<div class="brief-modal__container">
+			<div class="brief-modal__pre">{{{subtitle}}}</div>
+
+			<div class="brief-modal__content">{{{body}}}</div>
+
+		</div> </script> </div> <div class="row brief-modal__move-left agree-vote"> <h2 class="brief-modal__h2 brief-modal__when-brief" data-localization="vote.title"></h2> <!--<h2 class="brief-modal__h2  brief-modal__when-comment">your prediction</h2>--> <div class="row"> <script class="__agree-vote" type="text/x-handlebars-template"> <div class="column  column-6  agree-vote__content  agree-vote__content_{{position}}">
+				<div class="agree-vote__count">
+					{{formatNumber count}}
+				</div>
+
+				<!--<input type="radio" name="agree_vote" id="agree_vote__{{text}}" value="{{text}}">-->
+				<!--<label for="agree_vote__{{text}}" class="agree-vote__button">-->
+				<div class="agree-vote__button">
+					<div class="hexagon">
+						<div class="hexagon__in1">
+							<div class="hexagon__in2">
+								<div class="hexagon__image  pattern  pattern_lines-2">
+									<span class="agree-vote__text">
+										{{#if agree}} <span data-localization="vote.agree"></span>
+										{{else}} <span data-localization="vote.disagree"></span>
+										{{/if}}
+									</span>
+									<svg version="1.0" class="hexagon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	width="89" height="77" viewBox="0 0 89 77" xml:space="preserve">
+<path style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10;" d="M88.5,38.5l-22,38h-44l-22-38l22-38h44L88.5,38.5z"/>
+</svg>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> </script> </div> </div> <div class="row brief-comments-list"> <div class="add-comment-form"> <div class="row add-comment-form__header"> <div> <h1 class="skew skew_right"><p class="skew__content" data-localization="add_comment">ADD COMMENT</p></h1> </div> <div class="add-comment-form__header-hr"> <hr> </div> </div> <div class="add-comment-form__footer"> <form class="reply-comment"> <hr> <div class="reply-comment__input"> <div class="reply-comment__tale"><span></span></div> <div class="reply-comment__cancel"></div> <textarea name="comment" cols="30" rows="10"></textarea> </div> <button type="submit" class="border-button reply-comment__submit" data-localization="add_comment">ADD COMMENT</button> </form> </div> </div> <script class="__brief-comment" type="text/x-handlebars-template"> <ul class="list">
+			{{#each this}}
+			<li class="list__item  brief-comment  row">
+				<div class="column  hexagon  brief-comment__userpic">
+					<div class="hexagon__in1">
+						<div class="hexagon__in2">
+							<div class="hexagon__image">
+								<img src="{{user.image}}" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="column  brief-comment__text">
+					<div class="brief-comment__username">{{user.name}}</div>
+					<div class="brief-comment__comment">{{comment}}</div>
+					<!--<div class="brief-comment__comment  brief-comment__comment_desktop">{{comment}}</div>-->
+				</div>
+				<!--<div class="row  brief-comment__comment  brief-comment__comment_mobile">{{comment}}</div>-->
+
+			</li>
+			{{/each}}
+		</ul> </script> <!--<button class="border-button" data-localization="reply"></button>--> <div class="add-comment-form"> <div class="row add-comment-form__header"> <div> <h1 class="skew skew_right"><p class="skew__content" data-localization="add_comment">ADD COMMENT</p></h1> </div> <div class="add-comment-form__header-hr"> <hr> </div> </div> <div class="add-comment-form__footer"> <form class="reply-comment"> <hr> <div class="reply-comment__input"> <div class="reply-comment__tale"><span></span></div> <div class="reply-comment__cancel"></div> <textarea name="comment" cols="30" rows="10"></textarea> </div> <button type="submit" class="border-button reply-comment__submit" data-localization="add_comment">ADD COMMENT</button> </form> </div> </div> </div> <!--</div>--> <div class="row brief-modal__move-left brief-modal__socials socials socials_inline"> <ul class="list share"> <li class="list__item"><a href="https://www.facebook.com/sharer/sharer.php?u={{location}}" class="share__item share__item_fb" target="_blank"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="19" viewBox="0 0 18 19" style="enable-background:new 0 0 18 19" xml:space="preserve"> <path style="fill:#ffffff" d="M11.4,3.6h1.7V0.9h-2.1v0C7.8,1,7.2,2.8,7.1,4.6h0v2.2H5.4v2.7h1.7v8.6h3.3V9.5h2.5l0.5-2.7h-3v-2
+	C10.4,4.2,10.8,3.6,11.4,3.6z"/> </svg> </a></li> <li class="list__item"><a href="https://twitter.com/intent/tweet?url={{location}}" class="share__item share__item_tw" target="_blank"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="19" viewBox="0 0 18 19" style="enable-background:new 0 0 18 19" xml:space="preserve"> <path style="fill:#ffffff" d="M18.1,4.2c-0.3,0.2-1.2,0.5-2,0.6c0.5-0.3,1.3-1.2,1.5-1.9c-0.5,0.3-1.7,0.8-2.3,0.8c0,0,0,0,0,0
+	c-0.7-0.7-1.6-1.1-2.6-1.1c-2,0-3.6,1.6-3.6,3.6c0,0.3,0,0.5,0.1,0.8h0C6.4,6.8,3.4,5.4,1.6,3.2C0.5,5,1.5,7.1,2.7,7.9
+	c-0.4,0-1.2,0-1.6-0.4c0,1.2,0.6,2.9,2.8,3.5c-0.4,0.2-1.2,0.2-1.5,0.1c0.1,1,1.6,2.4,3.3,2.4c-0.6,0.7-2.8,1.9-5.2,1.5
+	c1.7,1,3.6,1.6,5.7,1.6c5.9,0,10.4-4.7,10.2-10.4c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0-0.1C16.8,5.6,17.6,5,18.1,4.2z"/> </svg> </a></li> </ul> </div> </div> </div> </div> <!--</span>--> </div> <div class="modal__ui about"> <div class="about__cont"> <h1 class="about__title" data-localization="about.title"></h1> <div class="about__text" data-localization="about.body"></div> <!--<h1 class="about__title  about__title_2"  data-localization="about.subtitle"></h1>--> <ul class="list about__list"> <script type="text/x-handlebars-template" data-localization="about.items"> {{#each this}}
+				<li class="list__item  about__step">
+					<div class="about__step-image  about__step-image_{{id}}"></div><!--
+					--><div class="about__step-text">{{{text}}}</div>
+					<a href="{{#switch id}}
+						{{#case 'pencil'}}#/modal/faq-addwork{{/case}}
+						{{#case 'glob'}}/#{{/case}}
+						{{#case 'cycle'}}#/modal/add-prediction{{/case}}
+					{{/switch}}" class="border-button  {{#ifCond id 'glob'}}to-root{{/ifCond}}">{{button}}</a>
+				</li>
+				{{/each}} </script> </ul> <script type="text/x-handlebars-template" data-localization="about.privacy_policy.items"> {{#each this}}
+			<a class="about__link" href="{{href}}" target="_blank">
+				<span>{{text}}</span>
+			</a>
+			{{/each}} </script> </div> </div> <div class="modal__ui search result-view"> <form action="/" class="form search__form"> <input name="search" class="input form__input search__input" type="text" data-localization="search.input" autocomplete="off"> <button type="submit" class="icon search__submit"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24" height="17" viewBox="0 0 24 17" style="enable-background:new 0 0 24 17" xml:space="preserve"> <polyline style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10" points="14.5,17 23,8.5 14.5,0 "/> <line style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10" x1="23" y1="8.5" x2="0" y2="8.5"/> </svg> </button> <div class="tags_line hidden"> <div class="tag_search">future</div> <div class="tag_search">clothing</div> </div> <hr> </form> <div class="row search__result hidden"> <!--svg height="0"  class="scroll-mask">
+	<mask id="_search_mask">
+		<linearGradient id="_search_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_search_gradient)"/>
+	</mask>
+</svg--> <div class="scrollssss"> <div class="scroll__maskedssss"> <!--style="mask: url(#_search_mask);"--> <div class="scroll__contssss"> <script type="text/x-handlebars-template"> <!--div class="column  search__result-column  search__result-column_{{title}}"-->
+                            <!--h3 class="search__result-title" data-localization="search.{{title}}.title"></h3-->
+
+                            <ul class="list  search__result-list">
+                                {{#each list}}
+                                <li class="list__item  search__result-item">
+                                    {{#switch ../title}}
+                                    {{#case "authors"}}
+                                    <div class="table">
+                                        <div class="table__column">
+                                            <div class="hexagon">
+                                                <div class="hexagon__in1">
+                                                    <div class="hexagon__in2">
+                                                        <div class="hexagon__image"
+                                                             style="background-image: url('{{image}}');"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table__column  search__result-user">
+                                            <a href="user-panel.html?user_id={{id}}" class="search__result-username">{{{name}}}</a>
+                                            <div class="search__result-count">{{{briefs_count}}} <span
+                                                    data-localization="search.briefs_count{{howMuch briefs_count}}"></span></div>
+                                        </div>
+                                    </div>
+                                    {{/case}}
+
+                                    {{#case "briefs"}}
+                                    <a href="{{brief_link this}}">
+                                        <h3 class="search__result-item-title">{{{name}}}</h3>
+                                        {{#if substring}}
+                                        <div class="search__result-item-body">{{{substring}}}</div>
+                                        {{/if}}
+                                    </a>
+                                    {{/case}}
+
+
+                                    {{#case "users"}}
+                                    <a href="{{user_link id}}">
+                                        <div class="table">
+                                            <div class="table__column">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url('{{image}}');"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table__column  search__result-user">
+                                                <div class="search__result-username">{{{name}}}</div>
+                                                <div class="search__result-count">{{{works.length}}} <span
+                                                        data-localization="search.works_count"></span></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {{/case}}
+
+                                    {{#case "works"}}
+                                    <a href="brief.html?brief_id={{brief.id}}#/{{id}}">
+                                        <div class="table">
+                                            <div class="table__column">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url('{{preview}}');"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table__column  search__result-user">
+                                                <h3 class="search__result-item-title">{{{brief.name}}}</h3>
+                                                <div class="search__result-item-author">{{{author}}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {{/case}}
+                                    {{/switch}}
+                                </li>
+                                {{/each}}
+                            </ul>
+                            <button class="border-button  load-more"  data-localization="more"></button>
+                        <!--/div--> </script> </div> </div> </div> </div> <!-- Tag container --> <!--svg height="0"  class="scroll-mask">
+	<mask id="_predictions_mask">
+		<linearGradient id="_predictions_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_predictions_gradient)"/>
+	</mask>
+</svg--> <div class="scroll predictions predictions-result hidden"> <div class="scroll__masked"> <!--style="mask: url(#_predictions_mask);"--> <div class="scroll__cont"> <input type="radio" name="predictions" id="predictions-list" class="checkbox-nth checkbox-nth_mobile" checked="checked"> <label class="column column-6 radio-column listpredictions" for="predictions-list"> <h1 class="predictions__h1" data-localization="predictions.title"></h1> </label> <input type="radio" name="predictions" id="futurologists-list" class="checkbox-nth checkbox-nth_mobile"> <label class="column column-6 radio-column futurologists" for="futurologists-list"> <h1 class="predictions__h1" data-localization="futurologists.title">FUTUROLOGISTS</h1> </label> <div class="row checkbox-nth-container"> <script type="text/x-handlebars-template"> </script> </div> </div> </div> </div> <div class="tags"> <div class="tags_items"> <div class="tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_nature">nature</span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> </div> <div class="tags_pos-r2 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_food">food</span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_clothing">clothing</span> </p> </div> <div class="tags_pos-r1 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> </div> <div class="tags_pos-r2 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_family">family</span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> </div> <div class="tags_pos-r3 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_home">home</span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> </div> <div class="tags_pos-r2 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_city">city</span> </p> </div> <div class="tags_pos-r1 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_threats">threats</span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_human">human</span> </p> </div> <div class="tags_pos-r2 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> </div> <div class="tags_pos-r1 tags_pos"> <p class="tags__item mini-text"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_entertainment">Entertainment</span> </p> <p class="tags__item mini-text"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_technology">Technology</span> </p> </div> <div class="tags_pos-r2 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_society">Society</span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> </div> <div class="tags_pos-r3 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text"></span> </p> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_transport">Transport</span> </p> </div> <div class="tags_pos-r2 tags_pos"> <p class="tags__item"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_work">work</span> </p> <p class="tags__item mini-text"> <svg width="107" height="90" x="0" y="0"> <polygon points="0,45 24.5,0 80.5,0 107,45 80.5,90 24.5,90 0,45" stroke-width="2" stroke="rgb(118,117,117)"/> </svg> <span class="tags__item_text" data-localization="search_privacy">privacy</span> </p> </div> </div> </div> </div> <div class="modal__ui ratings checkbox-nth-wrapper"> <!--svg height="0"  class="scroll-mask">
+	<mask id="_rating_mask">
+		<linearGradient id="_rating_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_rating_gradient)"/>
+	</mask>
+</svg--> <div class="scroll"> <div class="scroll__masked"> <!--style="mask: url(#_rating_mask);"--> <div class="scroll__cont"> <input type="radio" name="ratings" id="ratings-works" class="checkbox-nth checkbox-nth_mobile" checked="checked"> <label class="column column-6 radio-column works" for="ratings-works"> <h1 class="ratings__h1 radio-column__title" data-localization="ratings.works.title"></h1> </label> <input type="radio" name="ratings" id="ratings-authors" class="checkbox-nth checkbox-nth_mobile"> <label class="column column-6 radio-column authors" for="ratings-authors"> <h1 class="ratings__h1 radio-column__title" data-localization="ratings.authors.title"></h1> </label> <div class="row checkbox-nth-container"> <div class="column ratings__column ratings__column_works checkbox-nth-item works"> <ul class="list ratings__list"> <script id="works__item" type="text/x-handlebars-template"> {{#each this}}
+								<li class="ratings__list-item  works__item  list__item">
+									<a href="{{link}}"  class="ratings__link">
+										<div class="ratings__icon  works__icon  ">
+											<div class="hexagon">
+												<div class="hexagon__in1">
+													<div class="hexagon__in2">
+														<div class="hexagon__image"  style="background-image: url({{preview}})"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="ratings__info  works__info">
+											<h3 class="ratings__index  works__index">#{{index}}</h3>
+											<div class="ratings__info-text">
+												<h4 class="ratings__title works__title">{{brief.name}}</h4>
+												<p class="ratings__username  works__username">{{user.name}}</p>
+											</div>
+										</div>
+										<div class="ratings__rating  works__rating">{{formatNumber likes}}</div>
+									</a>
+								</li>
+								{{/each}} </script> </ul> <div class="row"> <button class="border-button load-more" data-localization="more"></button> </div> </div> <div class="column ratings__column ratings__column_authors checkbox-nth-item authors"> <ul class="list ratings__list"> <script id="authors__item" type="text/x-handlebars-template"> {{#each this}}
+								<li class="ratings__list-item  authors__item  list__item">
+									<a href="{{link}}"  class="ratings__link">
+										<div class="ratings__icon  authors__icon  ">
+											<div class="hexagon">
+												<div class="hexagon__in1">
+													<div class="hexagon__in2">
+														<div class="hexagon__image"  style="background-image: url({{user.image}})"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="ratings__info  authors__info">
+											<h3 class="ratings__index  authors__index">#{{index}}</h3>
+											<div class="ratings__info-text">
+												<h4 class="ratings__username  authors__username">{{user.name}}</h4>
+												<p class="authors__works-count">{{works_count}} <span data-localization="ratings.authors.works_count"></span></p>
+											</div>
+										</div>
+										<div class="ratings__rating  authors__rating">{{formatNumber likes}}</div>
+									</a>
+								</li>
+								{{/each}} </script> </ul> <div class="row"> <button class="border-button load-more" data-localization="more"></button> </div> </div> </div> <div class="ratings__social socials socials_inline"> <ul class="list share"> <li class="list__item"><a href="https://www.facebook.com/sharer/sharer.php?u={{location}}" class="share__item share__item_fb" target="_blank"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="19" viewBox="0 0 18 19" style="enable-background:new 0 0 18 19" xml:space="preserve"> <path style="fill:#ffffff" d="M11.4,3.6h1.7V0.9h-2.1v0C7.8,1,7.2,2.8,7.1,4.6h0v2.2H5.4v2.7h1.7v8.6h3.3V9.5h2.5l0.5-2.7h-3v-2
+	C10.4,4.2,10.8,3.6,11.4,3.6z"/> </svg> </a></li> <li class="list__item"><a href="https://twitter.com/intent/tweet?url={{location}}" class="share__item share__item_tw" target="_blank"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="19" viewBox="0 0 18 19" style="enable-background:new 0 0 18 19" xml:space="preserve"> <path style="fill:#ffffff" d="M18.1,4.2c-0.3,0.2-1.2,0.5-2,0.6c0.5-0.3,1.3-1.2,1.5-1.9c-0.5,0.3-1.7,0.8-2.3,0.8c0,0,0,0,0,0
+	c-0.7-0.7-1.6-1.1-2.6-1.1c-2,0-3.6,1.6-3.6,3.6c0,0.3,0,0.5,0.1,0.8h0C6.4,6.8,3.4,5.4,1.6,3.2C0.5,5,1.5,7.1,2.7,7.9
+	c-0.4,0-1.2,0-1.6-0.4c0,1.2,0.6,2.9,2.8,3.5c-0.4,0.2-1.2,0.2-1.5,0.1c0.1,1,1.6,2.4,3.3,2.4c-0.6,0.7-2.8,1.9-5.2,1.5
+	c1.7,1,3.6,1.6,5.7,1.6c5.9,0,10.4-4.7,10.2-10.4c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0-0.1C16.8,5.6,17.6,5,18.1,4.2z"/> </svg> </a></li> </ul> </div> </div> </div> </div> </div> <div class="modal__ui predictions"> <!--svg height="0"  class="scroll-mask">
+	<mask id="_predictions_mask">
+		<linearGradient id="_predictions_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_predictions_gradient)"/>
+	</mask>
+</svg--> <div class="scroll"> <div class="scroll__masked"> <!--style="mask: url(#_predictions_mask);"--> <div class="scroll__cont"> <form action="" class="predictions__search"><input type="text" class="predictions__search-input" data-localization="predictions.search"></form> <a class="predictions__addprediction" href="#/modal/add-prediction"> <svg width="107" height="90" x="0" y="0"> <polygon points="1,45 24.5,0 80.5,0 106,45 80.5,90 24.5,90 1,45" stroke-width="2" stroke="rgb(95, 210, 178)"></polygon> </svg> <span class="predictions__addprediction-text" data-localization="add_prediction.title">ADD NEW PREDICTION</span> </a> <div class="predictions__likes"> <span data-localization="prediction.you_have">YOU HAVE</span> <div class="predictions__likes-count"> <span class="user-panel__total-likes"> </span> <span data-localization="prediction.likes">LIKES</span> </div> </div> <div class="predictions__rank"> <span data-localization="prediction.your_rank_is">YOUR RANK IS</span> <div class="predictions__rank-count user-panel__total-rank"> </div> </div> <input type="radio" name="predictions" id="predictions-list" class="checkbox-nth checkbox-nth_mobile" checked="checked"> <label class="column column-6 radio-column listpredictions active" for="predictions-list"> <h1 class="predictions__h1" data-localization="predictions.title"></h1> </label> <input type="radio" name="predictions" id="futurologists-list" class="checkbox-nth checkbox-nth_mobile"> <label class="column column-6 radio-column futurologists" for="futurologists-list"> <h1 class="predictions__h1" data-localization="futurologists.title">FUTUROLOGISTS</h1> </label> <div class="row checkbox-nth-container"> <div class="column predictions__column checkbox-nth-item listpredictions active"> <ul class="list predictions__list"> <script id="predictions_script" type="text/x-handlebars-template"> {{#each this}}
+                                <li class="list__item predictions__list-item">
+                                    <a href="#/modal/brief/{{id}}" class="predictions__item row">
+                                        {{#if works_count_1}}
+                                        <div class="column column-2 predictions__icon">
+                                            <div class="hexagon_wrap">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url(/backend/storage/app/uploads/public/58a/5f4/048/thumb_1085_256x256_0_0_auto.jpg)"><!--image.first--></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="predictions__icon-count">{{works_count}} <span
+                                                    data-localization="predictions.works">WORKS</span></div>
+                                        </div>
+                                        {{/if}}
+                                        {{#if works_count_2}}
+                                        <div class="column column-2 predictions__icon s2">
+                                            <div class="hexagon_wrap">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url(/backend/storage/app/uploads/public/58a/5f4/048/thumb_1085_256x256_0_0_auto.jpg)"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hexagon_wrap">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url(/backend/storage/app/uploads/public/58a/5f4/048/thumb_1085_256x256_0_0_auto.jpg)"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="predictions__icon-count">{{works_count}} <span
+                                                    data-localization="predictions.works">WORKS</span></div>
+                                        </div>
+                                        {{/if}}
+                                        {{#if works_count_3}}
+                                        <div class="column column-2 predictions__icon s3">
+                                            <div class="hexagon_wrap">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url(/backend/storage/app/uploads/public/58a/5f4/048/thumb_1085_256x256_0_0_auto.jpg)"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hexagon_wrap">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url(/backend/storage/app/uploads/public/58a/5f4/048/thumb_1085_256x256_0_0_auto.jpg)"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hexagon_wrap">
+                                                <div class="hexagon">
+                                                    <div class="hexagon__in1">
+                                                        <div class="hexagon__in2">
+                                                            <div class="hexagon__image"
+                                                                 style="background-image: url(/backend/storage/app/uploads/public/58a/5f4/048/thumb_1085_256x256_0_0_auto.jpg)"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="predictions__icon-count">{{works_count}} <span
+                                                    data-localization="predictions.works">WORKS</span></div>
+                                        </div>
+                                        {{/if}}
+                                        <div class="column  column-7  predictions__brief">
+                                            <div class="predictions__brief-title">{{name}}</div>
+                                            {{#if author.name}}
+                                            <div class="predictions__brief-user">
+												<span class="predictions__brief-ico">
+													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	width="11" height="9"	viewBox="0 0 11 9" xml:space="preserve">
+<ellipse style="fill:#28EDA0;" cx="5.5" cy="2.6" rx="2.9" ry="2.6"/>
+<path style="fill:#28EDA0;" d="M8.3,5.7c-0.7,0.6-1.7,1-2.8,1c-1.1,0-2.1-0.4-2.8-1C1.1,6.4,0,7.5,0,9h5.3h0.5H11C11,7.5,9.9,6.4,8.3,5.7z"/>
+</svg>
+
+												</span>
+                                                <span>{{author.name}}&nbsp;</span>
+                                            </div>
+                                            {{/if}}
+                                            {{#if location}}
+                                            <div class="predictions__brief-city">
+												<span class="predictions__brief-ico">
+													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="3" height="4" viewBox="0 0 3 4" xml:space="preserve">
+<path style="fill:#28EDA0;" d="M2.2,0H0.8L0,1.3L1.5,4L3,1.3L2.2,0z M1.1,1.8L0.8,1.2l0.4-0.6h0.7l0.4,0.6L1.8,1.8H1.1z"/>
+</svg>
+
+												</span>
+                                                <span>{{location}}&nbsp;</span>
+                                            </div>
+                                            {{/if}}
+                                            <div class="predictions__brief-tagscloud">
+                                                <div class="predictions__brief-tag">
+                                                    <svg width="70" height="15" x="0" y="0" class="no-on-phones">
+                                                        <polygon points="0,7.5 5,0 65,0 70,7.5 65,15 5,15 0,7.5"
+                                                                 stroke-width="2" stroke="rgb(128, 128, 128)"></polygon>
+                                                    </svg>
+                                                    <svg width="80" height="28" x="0" y="0" class="on-phones">
+                                                        <polygon points="0,14 10,0 70,0 80,14 70,28 10,28 0,14"
+                                                                 stroke-width="2" stroke="rgb(128, 128, 128)"></polygon>
+                                                    </svg>
+                                                    <div class="predictions__brief-tag-text" data-localization="prediction.tags.future">Future</div>
+                                                </div>
+                                                <div class="predictions__brief-tag">
+                                                    <svg width="70" height="15" x="0" y="0" class="no-on-phones">
+                                                        <polygon points="0,7.5 5,0 65,0 70,7.5 65,15 5,15 0,7.5"
+                                                                 stroke-width="2" stroke="rgb(128, 128, 128)"></polygon>
+                                                    </svg>
+                                                    <svg width="112" height="28" x="0" y="0" class="on-phones">
+                                                        <polygon points="0,14 10,0 102,0 112,14 102,28 10,28 0,14"
+                                                                 stroke-width="2" stroke="rgb(128, 128, 128)"></polygon>
+                                                    </svg>
+                                                    <div class="predictions__brief-tag-text" data-localization="prediction.tags.humanity">Humanity</div>
+                                                </div>
+                                                <div class="predictions__brief-tag">
+                                                    <svg width="70" height="15" x="0" y="0" class="no-on-phones">
+                                                        <polygon points="0,7.5 5,0 65,0 70,7.5 65,15 5,15 0,7.5"
+                                                                 stroke-width="2" stroke="rgb(128, 128, 128)"></polygon>
+                                                    </svg>
+                                                    <svg width="86" height="28" x="0" y="0" class="on-phones">
+                                                        <polygon points="0,14 10,0 76,0 86,14 76,28 10,28 0,14"
+                                                                 stroke-width="2" stroke="rgb(128, 128, 128)"></polygon>
+                                                    </svg>
+                                                    <div class="predictions__brief-tag-text" data-localization="prediction.tags.planet">Planet</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column  column-3  predictions__counter-cont">
+                                            <div class="column  predictions__counter  predictions__counter_agree">
+                                                {{agree}}
+                                                <span data-localization="predictions.agree"></span>
+                                            </div>
+                                            <div class="column  predictions__counter  predictions__counter_disagree">
+                                                {{disagree}}
+                                                <span data-localization="predictions.disagree"></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                {{/each}} </script> </ul> <div class="row"> <button class="border-button load-more" data-localization="more"></button> </div> </div> <div class="column predictions__column checkbox-nth-item futurologists"> <ul class="list futurologists__list"> <script id="futurologists_script" type="text/x-handlebars-template"> {{#each this}}
+                                <li class="futurologists__list-item list__item">
+                                    <a href="user-panel.html?user_id={{id}}" class="futurologists__link">
+                                        <div class="futurologists__icon">
+                                            {{#if image}}
+                                            <div class="hexagon">
+                                                <div class="hexagon__in1">
+                                                    <div class="hexagon__in2">
+                                                        <div class="hexagon__image"
+                                                             style="background-image: url('{{image}}')"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/if}}
+                                        </div>
+                                        <div class="futurologists__info">
+                                            <h3 class="futurologists__index">
+                                                {{#if position}}
+                                                #{{position}}
+                                                {{/if}}
+                                            </h3>
+                                            <div class="futurologists__info-text">
+                                                <h4 class="futurologists__username">
+                                                    {{#if name}}
+                                                    {{name}}
+                                                    {{/if}}
+                                                </h4>
+                                                <p class="futurologists__works-count">
+                                                    {{briefs_count}}
+                                                    <span data-localization="lk.predictions_count{{howMuch briefs_count}}">PREDICTIONS</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="futurologists__rating">
+                                            <div class="predictions__counter-cont">
+                                                <div class="column  predictions__counter  predictions__counter_agree">
+                                                    {{total_agrees}}
+                                                    <span data-localization="predictions.agree"></span>
+                                                </div>
+                                                <div class="column  predictions__counter  predictions__counter_disagree">
+                                                    {{total_disagrees}}
+                                                    <span data-localization="predictions.disagree"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                {{/each}} </script> </ul> </div> </div> </div> </div> </div> </div> <div class="modal__ui add-prediction"> <h1 class="add-prediction__h1" data-localization="add_prediction.title">ADD NEW PREDICTION</h1> <form action="/brief/add" class="form"> <div class="input-label"> <span data-localization="add_prediction.msg_author">AUTHOR OF PREDICTION</span> <span class="input-label__star">*</span> </div> <div class="input-addon"> <input type="text" name="author" class="form__input form__input_textarea input add-prediction__input input-addon__input" data-localization=""> </div> <div class="input-comment" data-localization="add_prediction.msg_author_comment">You can add a prediction made by other author</div> <div class="input-label"> <span data-localization="add_prediction.msg_email">YOUR E-MAIL</span> <span class="input-label__star">*</span> </div> <div class="input-addon"> <input type="text" name="email" class="form__input form__input_textarea input add-prediction__input input-addon__input" data-localization=""> </div> <div class="input-label"> <span data-localization="add_prediction.msg_location">LOCATION</span> </div> <div class="input-addon"> <input type="text" name="location" class="form__input form__input_textarea input add-prediction__input input-addon__input" data-localization=""> </div> <div class="input-label"> <span data-localization="add_prediction.msg_year">YEAR</span> <span class="input-label__star">*</span> </div> <div class="year"> <label class="button year__button"> <input class="year-hidden" type="radio" name="year" value="2030"> <span class="year-content">2030</span> </label> <div class="year__line"></div> <label class="button year__button"> <input class="year-hidden" type="radio" name="year" value="2040"> <span class="year-content">2040</span> </label> <div class="year__line"></div> <label class="button year__button"> <input class="year-hidden" type="radio" name="year" value="2050"> <span class="year-content">2050</span> </label> </div> <div class="input-label"> <span data-localization="add_prediction.msg_title">TITLE</span> <span class="input-label__star">*</span> </div> <div class="input-addon"> <input type="text" name="title" class="form__input form__input_textarea input add-prediction__input input-addon__input" data-localization=""> </div> <div class="input-label"> <span data-localization="add_prediction.msg_description">DESCRIPTION</span> <span class="input-label__star">*</span> </div> <textarea name="description" id="" cols="30" rows="11" class="form__input form__input_textarea input add-prediction__description" data-localization="add_prediction.msg_description"></textarea> <label class="input-addon guarantees"> <div class="guarantees__checkbox"> <input type="checkbox" name="guarantees" class="guarantees-hidden" data-localization=""> <div class="guarantees-visible"></div> </div> <div class="guarantees__comment" data-localization="add_prediction.msg_guarantees">The user guarantees that the uploaded work does not violate the rights of third parties. In case of violation of this provision the user shall be fully liable to third parties.</div> </label> <button type="submit" class="button add-prediction__submit"><span class="button__content" data-localization="add_prediction.submit">SEND</span></button> </form> </div> <div class="modal__ui feedback"> <h1 class="feedback__h1" data-localization="feedback.title"></h1> <form action="" class="form"> <div class="input-addon"> <div data-localization="feedback.msg_title" class="input-addon__label"></div> <div> <input type="text" name="title" class="form__input form__input_textarea input feedback__input input-addon__input" data-localization=""> </div> </div> <textarea name="body" id="" cols="30" rows="11" class="form__input form__input_textarea input feedback__body" data-localization="feedback.msg_description"></textarea> <button type="submit" class="button feedback__submit"><span class="button__content" data-localization="feedback.submit"></span></button> </form> </div> <div class="modal__ui login modal__ui_login"> <div class="login__login"> <h1 class="login__title" data-localization="login.title"></h1> <div class="login__content"> <form action="login" class="form login__form" method="post"> <a href="https://facebook.com" class="button form__button login__social-button social-login" data-soc-type="fb"><span class="button__content" data-localization="login.fb"></span></a> <div class="hr login__hr"><span class="login__hr_text" data-localization="login.or"></span></div> <!--<div class="input" data-placeholder="E-MAIL"></div>--> <input name="login" class="input form__input login__input" type="text" data-localization="login.email"> <input name="password" class="input form__input login__input" type="password" data-localization="login.password" autocomplete="off"> <button type="submit" class="button form__button login__submit"><span class="button__content" data-localization="login.submit">LOGIN WITH E-MAIL</span></button> <div class="row"> <a href="#/modal/login/restore" class="login__link" data-localization="login.restore">FORGOT PASSWORD</a> <a href="#/modal/login/sign_up" class="login__link login__link_right" data-localization="login.sign_up">SIGN UP</a> </div> </form> </div> </div> <div class="login__restore"> <h1 class="login__title" data-localization="restore.title"></h1> <div class="login__content"> <form action="restore" class="form login__form"> <a href="https://facebook.com" class="button form__button login__social-button social-login" data-soc-type="fb"><span class="button__content" data-localization="login.fb"></span></a> <div class="hr login__hr"><span class="login__hr_text" data-localization="login.or"></span></div> <input name="login" class="input form__input login__input" type="text" data-localization="login.email"> <button type="submit" class="button form__button login__submit"><span class="button__content" data-localization="restore.submit"></span></button> <div class="row"> <a href="#/modal/login" class="login__link" data-localization="restore.login"></a> <a href="#/modal/login/sign_up" class="login__link login__link_right" data-localization="restore.sign_up"></a> </div> </form> </div> </div> <div class="login__change-password"> <h1 class="login__title" data-localization="restore.change.title"></h1> <div class="login__content"> <form action="change-password" class="form login__form form_validate" method="post"> <input name="code" type="hidden"> <input name="password" class="input form__input login__input" type="password" autocomplete="off" data-localization="login.password" data-required="" data-min-length="6" data-error-min-length="user_edit.pass1.min_length" data-chars="-!@#$%^&*()_+=[]{}&#34;'?,.;:a-zA-Z0-9" data-error-chars="password.wrong_chars"> <button type="submit" class="button form__button login__submit"><span class="button__content" data-localization="restore.change.submit"></span></button> <div class="row"> <a href="#/modal/login" class="login__link" data-localization="restore.login"></a> <a href="#/modal/login/sign_up" class="login__link login__link_right" data-localization="restore.sign_up"></a> </div> </form> </div> </div> <div class="login__sign-up"> <h1 class="login__title" data-localization="sign_up.title"></h1> <div class="login__content"> <form action="register" class="form login__form form_validate" method="post"> <!--<div class="input" data-placeholder="E-MAIL"></div>--> <!--<input name="firstname" class="input  form__input  login__input" type="text" data-localization="sign_up.firstname">--> <!--<input name="lastname" class="input  form__input  login__input" type="text" data-localization="sign_up.lastname">--> <input name="name" class="input input_regular form__input login__input" type="text" data-localization="sign_up.name" data-required=""> <input name="login" class="input form__input login__input" type="text" data-localization="sign_up.email" data-required=""> <input name="password" class="input form__input login__input" type="password" autocomplete="off" data-localization="sign_up.password" data-required="" data-min-length="6" data-error-min-length="user_edit.pass1.min_length" data-chars="-!@#$%^&*()_+=[]{}&#34;'?,.;:a-zA-Z0-9" data-error-chars="password.wrong_chars"> <button type="submit" class="button form__button login__submit"><span class="button__content" data-localization="sign_up.submit"></span></button> <div class="row login__sign-up-footer"> <span data-localization="sign_up.signed_up"></span> <a href="#/modal/login" data-localization="sign_up.login"></a> </div> </form> </div> </div> </div> <div class="modal__ui background faq"> <!--svg height="0"  class="scroll-mask">
+	<mask id="_faq_mask">
+		<linearGradient id="_faq_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_faq_gradient)"/>
+	</mask>
+</svg--> <div class="scroll"> <div class="scroll__masked"> <!--style="mask: url(#_faq_mask);"--> <div class="scroll__cont"> <div class="faq__content"> <h1 class="faq__h0 __mobile" data-localization="faq.title0"></h1> <div class="row faq__top" data-localization="faq.top"></div> <div class="faq__globe-wrapper"> <div class="faq__point"> <p data-localization="faq.globe"></p> </div> <div class="faq__globe"></div> </div> <h1 class="faq__h1" data-localization="faq.title"></h1> <div class="faq__item"> <div class="faq__index">1</div> <div class="faq__text faq__text_title"> <div class="faq__subtitle" data-localization="faq.title1"></div> </div> <div class="faq__text"> <div class="faq__p" data-localization="faq.info1"></div> <div class="faq__grid-example-wrapper"> <a href="./frontend/data/addwork_grid.svg" target="_blank" download class="faq__grid-example"><img src="./frontend/images/faq/grid-example.svg" alt=""></a> <a href="./frontend/data/addwork_grid.svg" target="_blank" download class="button button_solid-green button_no-lines"> <div class="button__content" data-localization="faq.download_button"></div> </a> </div> <div class="faq__point __desktop"><p data-localization="faq.download"></p></div> </div> </div> <div class="faq__item"> <div class="faq__index">2</div> <div class="faq__text faq__text_title"> <div class="faq__subtitle" data-localization="faq.title2"></div> </div> <div class="faq__text"> <div class="faq__p" data-localization="faq.info2"></div> </div> </div> <div class="faq__item"> <div class="faq__index">3</div> <div class="faq__text faq__text_title"> <div class="faq__subtitle" data-localization="faq.title3"></div> </div> <div class="faq__text"> <img class="faq__work-example" src="./frontend/images/faq/work-example.jpg" alt=""> <div class="faq__p" data-localization="faq.info3"></div> <div class="faq__button"> <a href="#/" class="button button_solid-green button_no-lines modal__close"><span class="button__content" data-localization="faq.add_work"></span></a> </div> </div> </div> <div class="faq__point faq__point_feedback __mobile"><p data-localization="faq.download"></p></div> </div> </div> </div> </div> </div> <div class="modal__ui background faq-2"> <!--svg height="0"  class="scroll-mask">
+	<mask id="_faq2_mask">
+		<linearGradient id="_faq2_gradient" y1="70%" x2="0" y2="95%">
+			<stop stop-color="white" offset="0"/>
+			<stop stop-opacity="0" offset="1"/>
+		</linearGradient>
+		<rect x="0" y="0" fill="url(#_faq2_gradient)"/>
+	</mask>
+</svg--> <div class="scroll"> <div class="scroll__masked"> <!--style="mask: url(#_faq2_mask);"--> <div class="scroll__cont"> <div class="faq-2__content"> <!--<h1 class="faq2__h0"  data-localization="faq2.title"></h1>--> <h1 class="faq-2__h1">FAQ</h1> <script type="text/x-handlebars-template"> <ul class="faq-2__list">
+							{{#each this}}
+							<li>
+								<h2 class="faq-2__q">{{{q}}}</h2>
+								<div class="faq-2__a">{{{a}}}</div>
+							</li>
+							{{/each}}
+						</ul> </script> </div> </div> </div> </div> </div> <div class="modal__ui modal-message pattern pattern_lines-4" data-no-close=""> <div class="pattern__content"> <h2 class="modal-message__title"></h2> <p class="modal-message__body"></p> <a class="button button_solid-green button_no-lines" href="#/"><div class="button__content">OK</div></a> </div> </div> </div> <a class="modal__close-button" href="#/"> <svg class="close-button-hexagon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="66" height="57" viewBox="0 0 66 57" xml:space="preserve"> <defs> <clipPath class="clip-path" id="modals__close_button"><rect x="0" y="0" width="100%" height="100%" fill="#000000"/></clipPath> </defs> <path class="_hover" style="clip-path:url(#modals__close_button)" d="M64.6,28.3L48.6,56H16.5l-16-27.8l16-27.8h32.1L64.6,28.3z"/> <path class="_inner" style="opacity:0.3;fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M60.6,27.8L46.3,53.3H18.8L4.6,27.8L18.8,3.3h27.5
+	L60.6,27.8z"/> <path class="_outer" style="fill:none;stroke:#04AA73;stroke-miterlimit:10" d="M64.6,28.3L48.6,56H16.5l-16-27.8l16-27.8h32.1L64.6,28.3z"/> <path class="_cross" style="fill:none;stroke:#FFFFFF;stroke-miterlimit:10" d="M22.1,17.8L43.1,38.8M22.1,38.8L43.1,17.8"/> </svg> </a> </div> <div class="welcome"> <div class="welcome__text welcome__text_{{index}}" data-localization="welcome" data-duration="{{duration}}"><div>{{{text}}}</div></div> </div> <div class="debug"></div> <script src="./frontend/scripts/assets.min.js"></script> <script src="./frontend/scripts/Kaspersky.min.js"></script> <!-- THREEJS --> <script src="./frontend/scripts/three.min.js"></script> <script src="./frontend/scripts/hexasphere.min.js"></script> </body> </html>
